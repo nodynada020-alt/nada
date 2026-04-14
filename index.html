@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oasis - نظام الكاشير</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="statusBar">الحالة: جاري التحميل...</div>
+
+    <section id="loginView" class="card">
+      <h1>Oasis - نظام الكاشير</h1>
+      <p>تسجيل دخول السوق</p>
+      <form id="loginForm">
+        <label>اسم المستخدم</label>
+        <input id="username" value="karam" required />
+        <label>كلمة المرور</label>
+        <input id="password" type="password" value="123456" required />
+        <button type="submit">دخول</button>
+      </form>
+      <small>الحساب الافتراضي: karam / 123456</small>
+    </section>
+
+    <section id="appView" class="hidden">
+      <header class="header">
+        <h2>لوحة Oasis</h2>
+        <div class="header-actions">
+          <div id="currentUser"></div>
+          <button id="logoutBtn">تسجيل خروج</button>
+        </div>
+      </header>
+      <section class="card location-banner">
+        <h3>الفرع الرئيسي</h3>
+        <p>قرية سيدي عبد الرحمن الساحل الشمالي - oasis cafe &amp; restaurant</p>
+      </section>
+      <nav class="tabs">
+        <button data-tab="pos">الكاشير</button>
+        <button data-tab="inventory">المخزون</button>
+        <button data-tab="suppliers">الموردين</button>
+        <button data-tab="reports">التقارير</button>
+        <button data-tab="users">المستخدمين والصلاحيات</button>
+      </nav>
+
+      <main>
+        <section id="tab-pos" class="tab card">
+          <h3>نقطة البيع</h3>
+          <div class="grid2">
+            <div>
+              <label>الفرع</label>
+              <select id="saleBranch"></select>
+            </div>
+            <div>
+              <label>طريقة الدفع</label>
+              <select id="paymentMethod">
+                <option value="cash">نقدي</option>
+                <option value="card">بطاقة</option>
+                <option value="mixed">مختلط</option>
+              </select>
+            </div>
+          </div>
+          <label>اختر منتج</label>
+          <select id="productPicker"></select>
+          <div class="grid2">
+            <input id="qtyInput" type="number" step="0.1" min="0.1" value="1" />
+            <button id="addItemBtn">إضافة للسلة</button>
+          </div>
+          <table id="cartTable">
+            <thead><tr><th>الصنف</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <h4 id="cartTotal">الإجمالي: 0 ج.م</h4>
+          <button id="submitSaleBtn">إتمام البيع</button>
+        </section>
+
+        <section id="tab-inventory" class="tab card hidden">
+          <h3>إدارة المخزون</h3>
+          <form id="productForm" class="grid3">
+            <input id="pName" placeholder="اسم المنتج" required />
+            <input id="pBarcode" placeholder="الباركود" required />
+            <select id="pBranch"></select>
+            <input id="pStock" type="number" step="0.1" placeholder="الكمية" required />
+            <input id="pMin" type="number" step="0.1" placeholder="حد النقص" required />
+            <input id="pBuy" type="number" step="0.1" placeholder="سعر الشراء" required />
+            <input id="pSell" type="number" step="0.1" placeholder="سعر البيع" required />
+            <select id="pSupplier"></select>
+            <button type="submit">إضافة منتج</button>
+          </form>
+          <table id="productsTable">
+            <thead><tr><th>الاسم</th><th>الباركود</th><th>الكمية</th><th>حد النقص</th><th>تنبيه</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </section>
+
+        <section id="tab-suppliers" class="tab card hidden">
+          <h3>الموردين</h3>
+          <form id="supplierForm" class="grid3">
+            <input id="sName" placeholder="اسم المورد" required />
+            <input id="sPhone" placeholder="رقم الجوال" required />
+            <input id="sNotes" placeholder="ملاحظات" />
+            <button type="submit">إضافة مورد</button>
+          </form>
+          <ul id="suppliersList"></ul>
+        </section>
+
+        <section id="tab-reports" class="tab card hidden">
+          <h3>التقارير اليومية</h3>
+          <button id="refreshReport">تحديث التقرير</button>
+          <div id="reportSummary"></div>
+          <h4>المباع خلال اليوم</h4>
+          <div id="soldTodayDetails"></div>
+          <h4>تنبيهات النقص</h4>
+          <ul id="lowStockList"></ul>
+          <h4>الفواتير التفصيلية</h4>
+          <div id="invoicesDetails"></div>
+        </section>
+
+        <section id="tab-users" class="tab card hidden">
+          <h3>المستخدمين والصلاحيات</h3>
+          <form id="userForm" class="grid3">
+            <input id="uName" placeholder="اسم المستخدم" required />
+            <input id="uPass" placeholder="كلمة المرور" required />
+            <select id="uRole">
+              <option value="cashier">كاشير</option>
+              <option value="manager">مدير</option>
+              <option value="owner">مالك</option>
+            </select>
+            <select id="uBranch"></select>
+            <button type="submit">إضافة مستخدم</button>
+          </form>
+          <table id="usersTable">
+            <thead><tr><th>المستخدم</th><th>الصلاحية</th><th>الفرع</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </main>
+    </section>
+
+    <script src="/app.js"></script>
+  </body>
+  </html>
